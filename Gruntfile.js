@@ -3,7 +3,7 @@
 var request = require('request');
 
 module.exports = function (grunt) {
-  var reloadPort = 35728, files;
+  var reloadPort = 35728, files; //changed from 35728 to prevent conflict with front-end port 
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -27,8 +27,8 @@ module.exports = function (grunt) {
       },
       jade: {
         files: ['app/views/**/*.jade'],
-        options: { livereload: reloadPort },
-      },
+        options: { livereload: reloadPort }
+      }
     }
   });
 
