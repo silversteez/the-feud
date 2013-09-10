@@ -15,6 +15,9 @@
     "grunt-develop": "~0.1.1",
     "grunt-contrib-watch": "~0.4.4",
     "grunt-contrib-compass": "~0.2.0",
-    "request": "~2.22.0"
+    "request": "~2.22.0",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "connect-mongo": "~0.3.3"
   }
 }

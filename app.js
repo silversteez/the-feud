@@ -1,7 +1,9 @@
 var express = require('express'),
   mongoose = require('mongoose'),
   fs = require('fs'),
-  config = require('./config/config');
+  config = require('./config/config'),
+  passport = require('passport');
+
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -16,10 +18,12 @@ fs.readdirSync(modelsPath).forEach(function (file) {
   }
 });
 
+require('./config/passport')(passport);
+
 var app = express();
 
-require('./config/express')(app, config);
-require('./config/routes')(app);
+require('./config/express')(app, config, passport);
+require('./config/routes')(app, passport);
 
 require('./app/controllers/questions').populate();
 
