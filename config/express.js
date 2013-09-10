@@ -13,14 +13,16 @@ module.exports = function(app, config, passport) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
+    app.use(express.cookieParser());
+
     //express/mongo session storage
-    // app.use(express.session({
-    //   secret: 'MATTY',
-    //   store: new mongoStore({
-    //     url: config.db,
-    //     collection: 'sessions'
-    //   })
-    // }));
+    app.use(express.session({
+      secret: 'MATTY',
+      store: new mongoStore({
+        url: config.db,
+        collection: 'sessions'
+      })
+    }));
 
     //use passport session
     app.use(passport.initialize());

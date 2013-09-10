@@ -18,6 +18,7 @@
     "request": "~2.22.0",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
-    "connect-mongo": "~0.3.3"
+    "connect-mongo": "~0.3.3",
+    "socket.io": "~0.9.16"
   }
 }

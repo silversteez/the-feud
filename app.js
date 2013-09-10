@@ -4,6 +4,7 @@ var express = require('express'),
   config = require('./config/config'),
   passport = require('passport');
 
+var io = require('socket.io');
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -27,4 +28,10 @@ require('./config/routes')(app, passport);
 
 require('./app/controllers/questions').populate();
 
-app.listen(config.port);
+io.listen(app.listen(config.port)).on('connection', function(socket){
+  console.log("socket connected!");
+  socket.on('message', function(msg) {
+    console.log('received: ', msg);
+    socket.broadcast.emit('message', msg);
+  });
+});
