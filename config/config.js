@@ -9,7 +9,7 @@ var config = {
       name: 'mmofftest'
     },
     port: 3000,
-    db: 'mongodb://localhost/mmofftest-development'
+    db: 'mongodb://localhost/mmoffDev'
   },
 
   test: {
@@ -18,7 +18,7 @@ var config = {
       name: 'mmofftest'
     },
     port: 3000,
-    db: 'mongodb://localhost/mmofftest-test'
+    db: 'mongodb://localhost/mmoffTest'
   },
 
   production: {
@@ -27,7 +27,7 @@ var config = {
       name: 'mmofftest'
     },
     port: 3000,
-    db: 'mongodb://localhost/mmofftest-production'
+    db: 'mongodb://localhost/mmoff'
   }
 };
 

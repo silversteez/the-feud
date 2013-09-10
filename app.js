@@ -21,4 +21,6 @@ var app = express();
 require('./config/express')(app, config);
 require('./config/routes')(app);
 
+require('./app/controllers/questions').populate();
+
 app.listen(config.port);

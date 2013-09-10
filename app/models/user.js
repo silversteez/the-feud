@@ -23,9 +23,9 @@ var UserSchema = new Schema({
     // github: {},
     // google: {},
     points: Number,
-    questionsAnswered: [{
+    answers: [{
         type: Schema.ObjectId,
-        ref: 'Question'
+        ref: 'Answer'
     }]
 });
 

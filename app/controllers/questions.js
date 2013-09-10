@@ -17,6 +17,8 @@ exports.create = function(req, res) {
     res.jsonp(question);
 };
 
+//just used to add questions from questionData.js for now
+//doens't duplicate questions because question string is set to 'unique'
 exports.populate = function() {
     var questionArr = require('../models/questionData');
     _.each(questionArr, function(val) {
