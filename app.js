@@ -28,10 +28,7 @@ require('./config/routes')(app, passport);
 
 require('./app/controllers/questions').populate();
 
-io.listen(app.listen(config.port)).on('connection', function(socket){
-  console.log("socket connected!");
-  socket.on('message', function(msg) {
-    console.log('received: ', msg);
-    socket.broadcast.emit('message', msg);
-  });
-});
+var server = app.listen(config.port);
+var ioObj = io.listen(server);
+require('./config/socket')(ioObj);
+
