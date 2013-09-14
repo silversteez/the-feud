@@ -6,15 +6,18 @@ var mongoose = require('mongoose'),
     Question = mongoose.model('Question'),
     _ = require('underscore');
 
+var currentQuestion = null;
+var curQuestionIndex = 0;
+var allQuestions = [];
+
 /**
- * Create a article
+ * Create a question
  */
 exports.create = function(req, res) {
     var question = new Question(req.body);
 
     question.createdBy = req.user;
     question.save();
-    res.jsonp(question);
 };
 
 //just used to add questions from questionData.js for now
@@ -27,6 +30,35 @@ exports.populate = function() {
         question.save();
     });
 };
+
+exports.getCurrentQuestion = function() {
+    //gets whatever the current question is
+    //when people first enter the game
+    return currentQuestion;
+};
+
+exports.getNextQuestion = function() {
+    //increments to next question in queue
+    //set currentQuestion to a question
+
+    //currently very hacky to get things going...
+    if (allQuestions.length === 0) {
+        Question.find({}, 'question').exec(function(err, data) {
+            data.forEach(function(item) {
+                allQuestions.push(item.question);
+            });
+        });
+    } else {
+        curQuestionIndex++;
+        if (curQuestionIndex >= allQuestions.length) {
+            curQuestionIndex = 0;
+        }
+
+        currentQuestion = allQuestions[curQuestionIndex++];
+        return currentQuestion;
+    }
+};
+
 
 // /**
 //  * Update a article

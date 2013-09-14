@@ -26,9 +26,12 @@ var app = express();
 require('./config/express')(app, config, passport);
 require('./config/routes')(app, passport);
 
+//creating some starter questions for testing.
 require('./app/controllers/questions').populate();
 
 var server = app.listen(config.port);
 var ioObj = io.listen(server);
+
+//game logic handled here
 require('./config/socket')(ioObj);
 
