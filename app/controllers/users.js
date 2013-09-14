@@ -4,12 +4,12 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
-/**
- * Auth callback
- */
-exports.authCallback = function(req, res, next) {
-    res.redirect('/');
-};
+// /**
+//  * Auth callback
+//  */
+// exports.authCallback = function(req, res, next) {
+//     res.redirect('/');
+// };
 
 /**
  * Show login form
@@ -39,53 +39,61 @@ exports.signout = function(req, res) {
     res.redirect('/');
 };
 
-/**
- * Session
- */
-exports.session = function(req, res) {
-    res.redirect('/');
-};
+// /**
+//  * Session
+//  */
+// exports.session = function(req, res) {
+//     res.redirect('/');
+// };
 
 /**
  * Create user
  */
 exports.create = function(req, res) {
     var user = new User(req.body);
-
+    console.log('req.body is ', req.body);
     user.provider = 'local';
     user.points = 0;
+
+    console.log(user);
     user.save(function(err) {
         if (err) {
-            return res.render('users/signup', {
-                errors: err.errors,
-                user: user
-            });
+            console.log("error saving user! ", err);
+            // return res.render('users/signup', {
+            //     errors: err.errors,
+            //     user: user
+            // });
+        } else {
+            console.log("seemed to save user ok!");
         }
         req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
+            if (err) {
+                return next(err);
+            }
+            // res.redirect('/');
+            res.send(req.user);
         });
     });
 };
 
-/**
- *  Show profile
- */
-exports.show = function(req, res) {
-    var user = req.profile;
+// /**
+//  *  Show profile
+//  */
+// exports.show = function(req, res) {
+//     var user = req.profile;
 
-    res.render('users/show', {
-        title: user.name,
-        user: user
-    });
-};
+//     res.render('users/show', {
+//         title: user.name,
+//         user: user
+//     });
+// };
 
-/**
- * Send User
- */
-exports.me = function(req, res) {
-    res.jsonp(req.user || null);
-};
+// /**
+//  * Send User
+//  */
+// exports.me = function(req, res) {
+//     res.jsonp(req.user || null);
+// };
 
 /**
  * Find user by id

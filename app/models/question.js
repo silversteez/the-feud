@@ -16,10 +16,6 @@ var QuestionSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  // asked: {
-  //   type: Date,
-  //   default: null
-  // },
   question: {
     type: String,
     default: '',
