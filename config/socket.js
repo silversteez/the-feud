@@ -32,6 +32,7 @@ module.exports = function(ioObj) {
       cycleTotalTime = transitionTime;
       gameState = state.transition;
       nextGameState = state.answer;
+      enterTransitionState();
       break;
 
       case state.answer:
@@ -40,6 +41,7 @@ module.exports = function(ioObj) {
       cycleTotalTime = answerTime;
       gameState = state.answer;
       nextGameState = state.question;
+      enterAnswerState();
       break;
 
     }
@@ -48,10 +50,28 @@ module.exports = function(ioObj) {
   var enterQuestionState = function() {
     //broadcast new question to everyone
     //hacked to use in-memory questions so don't need to queue up next question for now
-    var nextQuestion = questions.getNextQuestion();
-    ioObj.sockets.emit('nextQuestion', {
-      question: nextQuestion,
+    questions.getNextQuestion();
+
+    ioObj.sockets.emit('newQuestion', {
+      gameState: gameState,
+      cycleTotalTime: cycleTotalTime,
+      cycleTime: cycleTime,
+      question: questions.getCurrentQuestion(),
+    });
+  };
+
+  var enterTransitionState = function() {
+    ioObj.sockets.emit('transToAnswer', {
+      cycleTime: cycleTime,
       cycleTotalTime: cycleTotalTime
+    });
+  };
+
+  var enterAnswerState = function() {
+    ioObj.sockets.emit('showAnswers', {
+      cycleTime: cycleTime,
+      cycleTotalTime: cycleTotalTime,
+      answers: answers
     });
   };
 
@@ -111,6 +131,7 @@ module.exports = function(ioObj) {
     emitCycleUpdate();
 
     socket.on('submitAnswer', function(data) {
+      console.log('received answer!');
       answers.push(data.answer);
     });
   });
