@@ -1,6 +1,6 @@
 var questions = require('../app/controllers/questions');
 
-module.exports = function(ioObj) {
+module.exports = function(io) {
   var answers = [];
   //store the current state
   var gameState;
@@ -52,7 +52,7 @@ module.exports = function(ioObj) {
     //hacked to use in-memory questions so don't need to queue up next question for now
     questions.getNextQuestion();
 
-    ioObj.sockets.emit('newQuestion', {
+    io.sockets.emit('newQuestion', {
       gameState: gameState,
       cycleTotalTime: cycleTotalTime,
       cycleTime: cycleTime,
@@ -61,14 +61,16 @@ module.exports = function(ioObj) {
   };
 
   var enterTransitionState = function() {
-    ioObj.sockets.emit('transToAnswer', {
+    io.sockets.emit('transToAnswer', {
+      gameState: gameState,
       cycleTime: cycleTime,
       cycleTotalTime: cycleTotalTime
     });
   };
 
   var enterAnswerState = function() {
-    ioObj.sockets.emit('showAnswers', {
+    io.sockets.emit('answers', {
+      gameState: gameState,
       cycleTime: cycleTime,
       cycleTotalTime: cycleTotalTime,
       answers: answers
@@ -81,15 +83,15 @@ module.exports = function(ioObj) {
       cycleTotalTime: cycleTotalTime,
       cycleTime: cycleTime,
     };
-    //if we are in question state, add the current question to the update
-    if (gameState === state.question) {
-      updateObj.question = questions.getCurrentQuestion();
-    }
-    ioObj.sockets.emit('cycleUpdate', updateObj);
+    // //if we are in question state, add the current question to the update
+    // if (gameState === state.question) {
+    //   updateObj.question = questions.getCurrentQuestion();
+    // }
+    io.sockets.emit('cycleUpdate', updateObj);
   };
 
   var questionTime = 15;
-  var transitionTime = 5;
+  var transitionTime = 2;
   var answerTime = 10;
   //keep a reference to the total time of the current cycle to send to clients
   var cycleTotalTime;
@@ -105,6 +107,10 @@ module.exports = function(ioObj) {
   setInterval(function() {
     console.log("cycleTime is: ", cycleTime);
     cycleTime--;
+
+    //send out a cycle update every updateBeat to keep clients synced up
+    emitCycleUpdate();
+
     if (cycleTime <= 0) {
       setState(nextGameState);
     }
@@ -112,27 +118,26 @@ module.exports = function(ioObj) {
     switch(gameState) {
       case state.question:
       break;
-      case state.answer:
-      break;
       case state.transition:
       break;
+      case state.answer:
+      break;
     }
-
-    //send out a cycle update every updateBeat to keep clients synced up
-    emitCycleUpdate();
-    console.log(gameState);
-    console.log(cycleTotalTime);
 
   }, updateBeat);
 
   //all the stuff we do that requires a connection
-  ioObj.sockets.on('connection', function (socket) {
+  io.sockets.on('connection', function (socket) {
+    console.log("Connection type is: ", socket.transport);
     //send an update immediately on connection to let client know what state game is in
     emitCycleUpdate();
 
     socket.on('submitAnswer', function(data) {
       console.log('received answer!');
-      answers.push(data.answer);
+      answerObj = {
+        answer: data.answer
+      };
+      answers.push(answerObj);
     });
   });
 
