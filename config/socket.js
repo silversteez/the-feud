@@ -2,10 +2,29 @@ var questions = require('../app/controllers/questions');
 
 module.exports = function(io) {
   var answers = [];
+  var rankedAnswers = {};
   //store the current state
   var gameState;
   //cache the next game state whenever we setState()
   var nextGameState;
+
+  var rankAndSaveAnswer = function (answerObj) {
+    //want to do regex to strip out articles (the, a, some, maybe remove s from plural?)
+    //assume one word answers for now
+    var answer = answerObj.answer;
+    if (!rankedAnswers[answer]) {
+      rankedAnswers[answer] = 1;
+    } else {
+      rankedAnswers[answer]++;
+    }
+    console.log("answer: " + answer + "rank: " + rankedAnswers[answer]);
+  };
+
+  var getRankedAnswers = function() {
+    result = [];
+
+    return result;
+  };
 
   var state = {
     question: "question",
@@ -52,6 +71,10 @@ module.exports = function(io) {
     //hacked to use in-memory questions so don't need to queue up next question for now
     questions.getNextQuestion();
 
+    //reset answers on each new question for now...
+    rankedAnswers = {};
+    answers = [];
+
     io.sockets.emit('newQuestion', {
       gameState: gameState,
       cycleTotalTime: cycleTotalTime,
@@ -73,7 +96,7 @@ module.exports = function(io) {
       gameState: gameState,
       cycleTime: cycleTime,
       cycleTotalTime: cycleTotalTime,
-      answers: answers
+      answers: getRankedAnswers()
     });
   };
 
@@ -90,9 +113,9 @@ module.exports = function(io) {
     io.sockets.emit('cycleUpdate', updateObj);
   };
 
-  var questionTime = 15;
-  var transitionTime = 2;
-  var answerTime = 10;
+  var questionTime = 8;
+  var transitionTime = 4;
+  var answerTime = 6;
   //keep a reference to the total time of the current cycle to send to clients
   var cycleTotalTime;
   //where are we in the current cycle
@@ -133,11 +156,8 @@ module.exports = function(io) {
     emitCycleUpdate();
 
     socket.on('submitAnswer', function(data) {
-      console.log('received answer!');
-      answerObj = {
-        answer: data.answer
-      };
-      answers.push(answerObj);
+      console.log('received answer! ', data);
+      rankAndSaveAnswer(data);
     });
   });
 
