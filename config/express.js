@@ -12,7 +12,7 @@ var allowCrossDomain = function(req, res, next) {
 module.exports = function(app, config, passport) {
   app.configure(function () {
     app.use(express.compress());
-    app.use(express.static(config.root + '/public'));
+    app.use(express.static(config.root + '/www'));
     app.set('port', config.port);
     app.set('views', config.root + '/app/views');
     app.set('view engine', 'jade');
