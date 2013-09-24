@@ -1,30 +1,53 @@
 var questions = require('../app/controllers/questions');
 
 module.exports = function(io) {
-  var answers = [];
-  var rankedAnswers = {};
+  var numTotalAnswers = 0;
+  var answerScoreboard = {};
   //store the current state
   var gameState;
   //cache the next game state whenever we setState()
   var nextGameState;
 
-  var rankAndSaveAnswer = function (answerObj) {
+  var pointsAwarded = [10,5,3,2,1];
+
+  var addAndSaveAnswer = function (answerObj) {
     //want to do regex to strip out articles (the, a, some, maybe remove s from plural?)
     //assume one word answers for now
     var answer = answerObj.answer;
-    if (!rankedAnswers[answer]) {
-      rankedAnswers[answer] = 1;
+    if (!answerScoreboard[answer]) {
+      answerScoreboard[answer] = 1;
     } else {
-      rankedAnswers[answer]++;
+      answerScoreboard[answer]++;
     }
-    console.log("answer: " + answer + "rank: " + rankedAnswers[answer]);
+    console.log("answer: " + answer + ", rank: " + answerScoreboard[answer]);
   };
 
-  var getRankedAnswers = function() {
-    result = [];
+  var sortAnswersByScore = function() {
+    var sortedAnswers = [];
+    var result = [];
+
+    for (var key in answerScoreboard) {
+      sortedAnswers.push([key, answerScoreboard[key]]);
+    }
+    sortedAnswers.sort(function(a,b){ return b[1] - a[1]; });
+    //just sending the top 5 results and discarding the rest for now
+    sortedAnswers = sortedAnswers.slice(0,5);
+
+    //create answer data object to send to clients
+    for (var i = 0; i < sortedAnswers.length; i++) {
+      var answerArr = sortedAnswers[i];
+      var answerData = {};
+      answerData.rank = i+1;
+      answerData.content = answerArr[0];
+      console.log("nums are ", answerArr[1], numTotalAnswers);
+      answerData.percent = Math.floor(answerArr[1] / numTotalAnswers * 100) + "%";
+      answerData.points = pointsAwarded[i];
+      result.push(answerData);
+    }
 
     return result;
   };
+
 
   var state = {
     question: "question",
@@ -72,8 +95,8 @@ module.exports = function(io) {
     questions.getNextQuestion();
 
     //reset answers on each new question for now...
-    rankedAnswers = {};
-    answers = [];
+    numTotalAnswers = 0;
+    answerScoreboard = {};
 
     io.sockets.emit('newQuestion', {
       gameState: gameState,
@@ -96,7 +119,7 @@ module.exports = function(io) {
       gameState: gameState,
       cycleTime: cycleTime,
       cycleTotalTime: cycleTotalTime,
-      answers: getRankedAnswers()
+      answers: sortAnswersByScore()
     });
   };
 
@@ -113,9 +136,9 @@ module.exports = function(io) {
     io.sockets.emit('cycleUpdate', updateObj);
   };
 
-  var questionTime = 8;
-  var transitionTime = 4;
-  var answerTime = 6;
+  var questionTime = 15;
+  var transitionTime = 3;
+  var answerTime = 10;
   //keep a reference to the total time of the current cycle to send to clients
   var cycleTotalTime;
   //where are we in the current cycle
@@ -157,7 +180,8 @@ module.exports = function(io) {
 
     socket.on('submitAnswer', function(data) {
       console.log('received answer! ', data);
-      rankAndSaveAnswer(data);
+      addAndSaveAnswer(data);
+      numTotalAnswers++;
     });
   });
 
