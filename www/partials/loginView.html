@@ -1,0 +1,37 @@
+
+<div class="header" ng-controller="HomeCtrl">
+
+    <div class="backIconSection">
+        <a ng-click="back()">
+            <span class="topcoat-icon back-icon"></span>
+        </a>
+    </div>
+</div>
+
+<div class="login center" ng-controller="LoginCtrl">
+    <form name="loginform" ng-show="data.showLogin" ng-submit="submit()">
+        <h3>Create an account!</h3>
+        Username
+        <br/>
+        <input class="topcoat-text-input three-quarters" type="text" ng-model="data.username" placeholder="username" required/>
+        <br/>
+        <br/>
+        Password
+        <br/>
+        <input class="pw1 topcoat-text-input three-quarters" type="password" ng-model="data.password" placeholder="password" required/>
+        <br/>
+        <br/>
+        <button class="topcoat-button--cta">Submit</button>
+        <br/>
+        <br/>
+    </form>
+    <div ng-hide="data.showLogin">
+        <h3>You are now signed in as {{user.username}}.</h3></br>
+        You may delete your current account by pressing this button:</br></br>
+        <button class="topcoat-button--cta" ng-click="deleteProfile()">Delete Account!</button>
+        <br/>
+        <br/>
+    </div>
+
+</div>
+

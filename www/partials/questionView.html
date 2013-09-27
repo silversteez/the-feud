@@ -1,0 +1,79 @@
+<div class="header" ng-controller="HomeCtrl">
+
+    <div class="titleSection">
+        <h1>The Feud</h1>
+    </div>
+
+    <div class="logoutIconSection">
+        <a ng-click="slidePage('/login')">
+            <span ng-show="user.username!==null" class="topcoat-icon logout-icon"></span>
+            <span ng-show="user.username===null" class="topcoat-icon login-icon"></span>
+        </a>
+    </div>
+
+    <div class="displayName">
+        <a ng-click="slidePage('/login')">
+            <h4>{{data.displayName}}</h4>
+        </a>
+    </div>
+</div>
+
+<div class="center">
+    <div
+    ng-switch on="data.clientState"
+    ng-animate="{enter: 'wave-enter', leave: 'wave-leave'}">
+
+        <div class="section" ng-switch-when="showQuestion">
+            <ng-include src="'partials/progressBar.html'"></ng-include>
+            <h3 class="question">{{game.question}}</h3>
+            <div ng-show="data.canSubmitAnswer">
+
+                <form name="answerform" ng-submit="submitAnswer()">
+                    <input
+                        class="topcoat-text-input half"
+                        type="text" ng-model="data.answerTemp"
+                        placeholder="answer"
+                        required/>
+                    <button class="topcoat-button--cta">Submit</button>
+                </form>
+
+            </div>
+            <h4 ng-show="data.answerSubmitted">You said <span class="redText">{{data.answer}}</span>.</h4>
+        </div>
+
+        <div class="section" ng-switch-when="showAnswer">
+            <ng-include src="'partials/progressBar.html'"></ng-include>
+            <h3 class="question">{{game.question}}</h3>
+
+            <div ng-show="game.gameState==='transition'">
+                <h4>Processing results...</h4>
+                <div class="loading-spinner"></div>
+            </div>
+
+            <table ng-show="game.gameState==='answer'" class="basictable">
+                <tr>
+                    <th>Rank</th>
+                    <th>Answer</th>
+                    <th>Popularity</th>
+                    <th>Points</th>
+                </tr>
+                <tr ng-repeat="answer in game.answers">
+                    <td>{{answer.rank}}</td>
+                    <td>{{answer.content}}</td>
+                    <td>{{answer.percent}}</td>
+                    <td>{{answer.points}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <ng-include src="'partials/footer.html'"></ng-include>
+
+    <ng-include src="'partials/modalView.html'"></ng-include>
+
+</div>
+
+
+
+
+

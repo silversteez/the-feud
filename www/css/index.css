@@ -1,0 +1,317 @@
+.header {
+  padding: 10px;
+  height: 30px;
+}
+
+.titleSection {
+  float: left;
+  line-height: 10px;
+  margin-left: 10px;
+}
+
+.userSection {
+  float: right;
+}
+.displayName {
+  float: right;
+}
+.logoutIconSection {
+  float: right;
+  margin: 20px 10px 0 5px;
+}
+.backIconSection {
+  float: left;
+  margin: 15px 5px 0 20px;
+}
+.redText {
+  color: #f5393d;
+}
+.question {
+  line-height: 25px;
+  margin: 10px;
+}
+.login,
+.section,
+.footer {
+  position: absolute;
+  left: 0;
+
+  width: 96%;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  margin: 10px 2%;
+
+  border-radius: 6px;
+}
+.section {
+  top: 50px;
+  bottom: 95px;
+
+  background-color: #fff;
+}
+.login {
+  background-color: #fff;
+}
+.footer {
+  height: 80px;
+  bottom: 0;
+
+  font-size: 14px;
+  background-color: #1b5568;
+  color: #fff;
+}
+.footer .right {
+  float: right;
+}
+.footer .feudScore {
+  font-weight: 600;
+  font-size: 20px;
+}
+.footer .feudScore .displayPoints {
+  color: yellow;
+}
+
+table.basictable {
+  color:#333333;
+  border-width: 1px;
+  border-color: #c7c7c7;
+  border-collapse: collapse;
+  margin: 10px 2%;
+  width: 96%;
+  font-size: 14px;
+}
+table.basictable th {
+  border-width: 1px;
+  padding: 3px;
+  border-style: solid;
+  border-color: #c7c7c7;
+  background-color: #eeeeee;
+}
+table.basictable td {
+  border-width: 1px;
+  padding: 3px;
+  border-style: solid;
+  border-color: #c7c7c7;
+  background-color: #ffffff;
+}
+
+.list {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.pad {
+    left: 5%;
+    height: 100%;
+    width: 95%;
+    position: absolute;
+}
+
+.note {
+    position: absolute;
+    bottom: 45px;
+    left: 5px;
+}
+
+.scroll {
+    padding: 5px;
+    margin: 10px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: 10px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 220px;
+    width: 85%;
+    -webkit-box-shadow: outset 0 1px rgba(255,255,255,0.12);
+    box-shadow: outset 0 1px rgba(255,255,255,0.12);
+    border: 1px solid rgba(0,0,0,0.36);
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+
+.centerize {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home-icon {
+    background: url("../img/home2.svg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.settings-icon {
+    background: url("../img/settings_light.svg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.login-icon {
+  background: url("../img/login.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.logout-icon {
+  background: url("../img/logout.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.back-icon {
+  background: url("../img/backArrow.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+img {
+    margin-top: 10px;
+    padding: 25px;
+    width: 200px;
+    height: 180px;
+    -webkit-box-shadow: inset 0 1px rgba(255,255,255,0.12);
+    box-shadow: inset 0 1px rgba(255,255,255,0.12);
+    border: 1px solid rgba(0,0,0,0.36);
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+
+
+
+.fade-leave, .fade-enter {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.fade-leave {
+    opacity:1;
+}
+
+.fade-leave.fade-leave-active {
+    opacity:0;
+}
+
+.fade-enter {
+    opacity:0;
+}
+
+.fade-enter.fade-enter-active {
+    opacity:1;
+}
+
+/* LEFT TO RIGHT SLIDE */
+.wave-enter, .wave-leave {
+    -webkit-transition:all cubic-bezier(.8, 0, .45, 1) 0.5s;
+    -moz-transition:all cubic-bezier(.8, 0, .45, 1) 0.5s;
+    -o-transition:all cubic-bezier(.8, 0, .45, 1) 0.5s;
+    transition:all cubic-bezier(.8, 0, .45, 1) 0.5s;
+
+}
+
+.wave-enter {
+    left:-100%;
+}
+
+.wave-enter.wave-enter-active {
+    left:0;
+}
+
+.wave-leave {
+    left:0;
+}
+
+.wave-leave.wave-leave-active {
+    left:100%;
+}
+
+.loading-spinner {
+    background: url("../img/spinner2x.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    margin: 20px auto;
+    width: 50px;
+    height: 50px;
+
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: 1000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    -webkit-opacity: .5;
+    -moz-opacity: .5;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    z-index: 1000;
+}
+
+.modal-content {
+    left: 10%;
+    right: 10%;
+    padding: 15px;
+    position: absolute;
+    z-index: 1001;
+
+    background-color: white;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 0 50px 0 #222;
+    -moz-box-shadow: 0 0 50px 0 #222;
+    box-shadow: 0 0 50px 0 #222;
+    font-size: 14px;
+}
