@@ -23,7 +23,7 @@ exports.create = function(req, res) {
 //just used to add questions from questionData.js for now
 //doens't duplicate questions because question string is set to 'unique'
 exports.populate = function() {
-    var questionArr = require('../models/questionData');
+    var questionArr = require('../questionData');
     _.each(questionArr, function(val) {
         var question = new Question();
         question.question = val.question;
@@ -58,56 +58,3 @@ exports.getNextQuestion = function() {
         return currentQuestion;
     }
 };
-
-
-// /**
-//  * Update a article
-//  */
-// exports.update = function(req, res) {
-//     var article = req.article;
-
-//     article = _.extend(article, req.body);
-
-//     article.save(function(err) {
-//         res.jsonp(article);
-//     });
-// };
-
-// /**
-//  * Delete an article
-//  */
-// exports.destroy = function(req, res) {
-//     var article = req.article;
-
-//     article.remove(function(err) {
-//         if (err) {
-//             res.render('error', {
-//                 status: 500
-//             });
-//         } else {
-//             res.jsonp(article);
-//         }
-//     });
-// };
-
-// /**
-//  * Show an article
-//  */
-// exports.show = function(req, res) {
-//     res.jsonp(req.article);
-// };
-
-// /**
-//  * List of Articles
-//  */
-// exports.all = function(req, res) {
-//     Article.find().sort('-created').populate('user').exec(function(err, articles) {
-//         if (err) {
-//             res.render('error', {
-//                 status: 500
-//             });
-//         } else {
-//             res.jsonp(articles);
-//         }
-//     });
-// };
