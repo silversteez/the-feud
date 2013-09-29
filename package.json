@@ -1,13 +1,13 @@
 {
   "name": "yoExp",
-  "version": "0.0.1-8",
+  "version": "0.0.1-11",
   "private": true,
   "scripts": {
     "start": "app.js"
   },
-  "repository" :
-  { "type" : "git",
-    "url" : "https://github.com/silversteez/question-game-be.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/silversteez/question-game-be.git"
   },
   "dependencies": {
     "express": "~3.3.4",
