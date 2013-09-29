@@ -20,9 +20,20 @@ exports.create = function(req, res) {
     question.save();
 };
 
+exports.removeQuestions = function(req, res) {
+    Question.remove({}, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            exports.populate();
+            res.send("repopulated questions from question data");
+        }
+    });
+};
+
 //just used to add questions from questionData.js for now
 //doens't duplicate questions because question string is set to 'unique'
-exports.populate = function() {
+exports.repopulate = function() {
     var questionArr = require('../questionData');
     _.each(questionArr, function(val) {
         var question = new Question();
@@ -54,7 +65,7 @@ exports.getNextQuestion = function() {
             curQuestionIndex = 0;
         }
 
-        currentQuestion = allQuestions[curQuestionIndex++];
+        currentQuestion = allQuestions[curQuestionIndex];
         return currentQuestion;
     }
 };

@@ -62,28 +62,16 @@ module.exports = function(io) {
     switch(st) {
       case state.question:
       console.log("entered case question");
-      cycleTime = questionTime;
-      cycleTotalTime = questionTime;
-      gameState = state.question;
-      nextGameState = state.transition;
       enterQuestionState();
       break;
 
       case state.transition:
       console.log("entered case transition");
-      cycleTime = transitionTime;
-      cycleTotalTime = transitionTime;
-      gameState = state.transition;
-      nextGameState = state.answer;
       enterTransitionState();
       break;
 
       case state.answer:
       console.log("entered case answer");
-      cycleTime = answerTime;
-      cycleTotalTime = answerTime;
-      gameState = state.answer;
-      nextGameState = state.question;
       enterAnswerState();
       break;
 
@@ -91,6 +79,11 @@ module.exports = function(io) {
   };
 
   var enterQuestionState = function() {
+    cycleTime = questionTime;
+    cycleTotalTime = questionTime;
+    gameState = state.question;
+    nextGameState = state.transition;
+
     //broadcast new question to everyone
     //hacked to use in-memory questions so don't need to queue up next question for now
     questions.getNextQuestion();
@@ -108,6 +101,11 @@ module.exports = function(io) {
   };
 
   var enterTransitionState = function() {
+    cycleTime = transitionTime;
+    cycleTotalTime = transitionTime;
+    gameState = state.transition;
+    nextGameState = state.answer;
+
     io.sockets.emit('transToAnswer', {
       gameState: gameState,
       cycleTime: cycleTime,
@@ -116,6 +114,11 @@ module.exports = function(io) {
   };
 
   var enterAnswerState = function() {
+    cycleTime = answerTime;
+    cycleTotalTime = answerTime;
+    gameState = state.answer;
+    nextGameState = state.question;
+
     io.sockets.emit('answers', {
       gameState: gameState,
       cycleTime: cycleTime,
@@ -158,7 +161,6 @@ module.exports = function(io) {
 
   //run this every updateBeat so we can track what second of the cycle we're on
   setInterval(function() {
-    console.log("cycleTime is: ", cycleTime);
     cycleTime--;
 
     if (cycleTime < 0) {

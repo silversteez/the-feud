@@ -27,7 +27,7 @@ require('./config/express')(app, config, passport);
 require('./config/routes')(app, passport);
 
 //creating some starter questions for testing.
-require('./app/controllers/questions').populate();
+require('./app/controllers/questions').repopulate();
 
 var server = app.listen(config.port);
 var ioObj = io.listen(server);

@@ -1,9 +1,12 @@
+var questions = require('../app/controllers/questions');
+
 module.exports = function(app, passport){
 
   app.get('/', function (req, res) {
     res.send('This is happening.');
   });
 
+  app.get('/remove', questions.removeQuestions);
   //User Routes
   // var users = require('../app/controllers/users');
   // app.get('/signin', users.signin);
