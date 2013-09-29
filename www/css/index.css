@@ -92,7 +92,16 @@ table.basictable td {
   padding: 3px;
   border-style: solid;
   border-color: #c7c7c7;
-  background-color: #ffffff;
+}
+.regularRow {
+  background-color: #fff;
+}
+.winningRow {
+  -webkit-transition: all linear 3s;
+  -moz-transition: all linear 3s;
+  -o-transition: all linear 3s;
+  transition: all linear 3s;
+  background-color: yellow;
 }
 
 .list {

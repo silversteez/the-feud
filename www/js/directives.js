@@ -9,11 +9,16 @@ angular.module('myApp.directives', [])
   }])
   .directive('resetProgBar', function() {
     return function(scope, elm, attrs) {
-      // elm.removeClass('progress-animate').css('width', '{{progressBarVal}}%').addClass('progress-animate');
-
       scope.$watch('game.gameState', function() {
         elm.removeClass('progress-animate').css('width', '100%').addClass('progress-animate');
       });
+    };
+  })
+  .directive('highlightWinner', function() {
+    return function(scope, elm, attrs) {
+      if (scope.data.answer === scope.answer.content) {
+        elm.children().removeClass('regularRow').addClass('winningRow');
+      }
     };
   })
   ;

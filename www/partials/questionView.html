@@ -57,7 +57,7 @@
                     <th>Popularity</th>
                     <th>Points</th>
                 </tr>
-                <tr ng-repeat="answer in game.answers">
+                <tr ng-repeat="answer in game.answers" highlight-winner>
                     <td>{{answer.rank}}</td>
                     <td>{{answer.content}}</td>
                     <td>{{answer.percent}}</td>

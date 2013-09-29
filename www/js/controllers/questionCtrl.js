@@ -58,6 +58,8 @@ function QuestionCtrl($rootScope,$scope,game,user,navSvc) {
       $scope.data.answerSubmitted = false;
     } else { //in question state
       $scope.data.clientState = "showQuestion";
+      $scope.data.answer = null;
+      $scope.data.answerTemp = '';
       $scope.data.transToAnswer = false;
       $scope.data.answerSubmitted = false;
       $scope.data.canSubmitAnswer = true;
@@ -66,7 +68,12 @@ function QuestionCtrl($rootScope,$scope,game,user,navSvc) {
   });
 
   $scope.submitAnswer = function() {
-    $scope.data.answer = $scope.data.answerTemp;
+    $scope.data.answer = $scope.data.answerTemp
+      .toLowerCase()
+      .replace(/^\s+|\s+$/g, "") //trim leading/trailing whitespace
+      .replace(/[^\w\s]|_/g, "") //trim non-alphanumeric chars
+      .replace(/\s+/g, " "); //trim extra spaces to a single space
+
     $scope.data.answerTemp = '';
     var answerObj = {
       username: user.username,
