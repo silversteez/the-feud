@@ -25,7 +25,7 @@ exports.removeQuestions = function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            exports.populate();
+            exports.repopulate();
             res.send("repopulated questions from question data");
         }
     });
